@@ -15,8 +15,10 @@ docker pull jbuchbinder/freemed
 
 ## Running/Installing from Github
 
+This will run **FreeMED** on `localhost:8080`.
+
 ```
 docker build -rm -t freemed git://github.com/freemed/freemed-docker.git
-docker run -d freemed
+docker run -p 8080:80 -d freemed
 ```
 
