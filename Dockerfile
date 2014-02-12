@@ -17,8 +17,9 @@ RUN ( export DEBIAN_FRONTEND=noninteractive ; apt-get -y install git mysql-clien
 RUN apt-get --purge remove php5-suhosin
 
 # MySQL u/p
-RUN service mysql start
-RUN echo "CREATE DATABASE IF NOT EXISTS freemed; GRANT ALL ON freemed.* TO freemed@localhost IDENTIFIED BY 'password' WITH GRANT OPTION; GRANT SUPER ON *.* TO freemed@localhost; FLUSH PRIVILEGES;" | mysql -uroot
+#RUN service mysql start
+RUN nohup /usr/bin/mysqld &
+RUN echo "CREATE DATABASE IF NOT EXISTS freemed; GRANT ALL ON freemed.* TO freemed@localhost IDENTIFIED BY 'password' WITH GRANT OPTION; GRANT SUPER ON *.* TO freemed@localhost; FLUSH PRIVILEGES;" | mysql -h127.0.0.1 -uroot
 
 # FreeMED GIT code
 RUN ( cd /usr/share/ ; git clone git://github.com/freemed/freemed.git )
@@ -30,6 +31,8 @@ RUN ( cd /etc/apache2/conf.d; ln -s /usr/share/freemed/doc/freemed.apache.conf .
 
 # FreeMED Configuration
 RUN echo -e "FreeMED Installation\n127.0.0.1\nfreemed\nfreemed\npassword\nen_US\n" | php /usr/share/freemed/scripts/configure-settings.php
+# ... and installation
+RUN ( cd /usr/share/freemed ; php ./scripts/install.php --ni )
 
 # Build translations for FreeMED 0.9.x+
 RUN ( cd /usr/share/freemed/locale; make )
