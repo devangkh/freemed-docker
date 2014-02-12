@@ -31,7 +31,9 @@ RUN ( cd /usr/share/ ; git clone git://github.com/freemed/freemed.git )
 RUN ( cd /usr/share/ ; git clone git://github.com/freemed/remitt.git )
 
 RUN chown -Rf www-data:www-data /usr/share/freemed
-RUN ( cd /etc/apache2/conf.d; ln -s /usr/share/freemed/doc/freemed.apache.conf . )
+
+# Enable configuration in proper place
+ADD ./freemed.apache.conf /etc/apache2/conf-enabled/freemed.apache.conf
 
 # FreeMED Configuration
 RUN echo -e "FreeMED Installation\n127.0.0.1\nfreemed\nfreemed\npassword\nen_US\n" | php /usr/share/freemed/scripts/configure-settings.php
