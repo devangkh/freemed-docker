@@ -53,6 +53,11 @@ RUN /usr/share/freemed/scripts/build_gsdjvu.sh
 # Restart Apache HTTPD
 RUN /etc/init.d/apache2 restart
 
+# Ensure that we have our custom startup script
+ADD ./startup.sh /usr/share/freemed/scripts/startup.sh
+
 # Expose Apache port
 EXPOSE 80
+
+CMD [ "/bin/bash", "/usr/share/freemed/scripts/startup.sh" ]
 
