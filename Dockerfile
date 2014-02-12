@@ -46,6 +46,9 @@ RUN /bin/bash /tmp/install.sh
 # Build translations for FreeMED 0.9.x+
 RUN ( cd /usr/share/freemed/locale; make )
 
+# Build GWT UI
+RUN ( cd /usr/share/freemed/ui/gwt; make )
+
 # Enable PHP5 for Apache 2.x
 RUN /usr/sbin/a2enmod php5
 
