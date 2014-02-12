@@ -65,12 +65,6 @@ function execSql  ( $s    ) { print " - Executing \"$s\" : "; $GLOBALS['sql']->q
 function printHeader ( $x ) { print "\n\n ----->> ${x} <<-----\n\n"; }
 function loadSchema ( $s ) { $c="./scripts/load_schema.sh 'mysql' '${s}' '".DB_USER."' '".DB_PASSWORD."' '".DB_NAME."'"; print `$c`; print "\n\n"; }
 
-print "\nPlease type 'yes' if you're *sure* you want to do this : ";
-if ( !$nimode && getInput( '%s' ) != 'yes' ) {
-	print "\nI didn't think so. :(\n";
-	die();
-}
-
 print "
 
 Thank you for choosing FreeMED as your electronic medical record / practice
@@ -103,15 +97,8 @@ loadSchema( 'acl' );
 
 // Add the administrative account
 printHeader( "Add an administrative account" );
-print "\nPlease enter an username for your administrative account [root] : ";
-$username = getInput( '%s' );
-if ($username == "") { $username = "root"; }
-print "\nPlease enter a password for your administrative account : ";
-$password = getInput( '%s' );
-if ($nimode) {
-	$username = 'root';
-	$password = 'password';
-}
+$username = 'root';
+$password = 'password';
 LoadObjectDependency( "org.freemedsoftware.public.Installation" );
 Installation::CreateAdministrationAccount( $username, $password );
 print "\n\n";
