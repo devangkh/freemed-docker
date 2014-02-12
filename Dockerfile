@@ -6,6 +6,10 @@
 FROM debian
 MAINTAINER Jeffrey Buchbinder, freemed@gmail.com
 
+# Fix initialization startup
+RUN dpkg-divert --local --rename --add /sbin/initctl
+#RUN ln -s /bin/true /sbin/initctl
+
 # make sure the package repository is up to date
 RUN apt-get update
 
@@ -17,9 +21,9 @@ RUN ( export DEBIAN_FRONTEND=noninteractive ; apt-get -y install git mysql-clien
 RUN apt-get --purge remove php5-suhosin
 
 # MySQL u/p
-#RUN service mysql start
-RUN nohup /usr/bin/mysqld &
-RUN echo "CREATE DATABASE IF NOT EXISTS freemed; GRANT ALL ON freemed.* TO freemed@localhost IDENTIFIED BY 'password' WITH GRANT OPTION; GRANT SUPER ON *.* TO freemed@localhost; FLUSH PRIVILEGES;" | mysql -h127.0.0.1 -uroot
+ADD ./init-mysqld.sh /tmp/init-mysqld.sh
+RUN /bin/bash /tmp/init-mysqld.sh
+#RUN echo "CREATE DATABASE IF NOT EXISTS freemed; GRANT ALL ON freemed.* TO freemed@localhost IDENTIFIED BY 'password' WITH GRANT OPTION; GRANT SUPER ON *.* TO freemed@localhost; FLUSH PRIVILEGES;" | mysql -uroot
 
 # FreeMED GIT code
 RUN ( cd /usr/share/ ; git clone git://github.com/freemed/freemed.git )
@@ -32,6 +36,8 @@ RUN ( cd /etc/apache2/conf.d; ln -s /usr/share/freemed/doc/freemed.apache.conf .
 # FreeMED Configuration
 RUN echo -e "FreeMED Installation\n127.0.0.1\nfreemed\nfreemed\npassword\nen_US\n" | php /usr/share/freemed/scripts/configure-settings.php
 # ... and installation
+ADD ./settings.php /usr/share/freemed/lib/settings.php
+ADD ./install.php /usr/share/freemed/scripts/install.php
 RUN ( cd /usr/share/freemed ; php ./scripts/install.php --ni )
 
 # Build translations for FreeMED 0.9.x+
@@ -41,7 +47,7 @@ RUN ( cd /usr/share/freemed/locale; make )
 RUN /usr/sbin/a2enmod php5
 
 # gsdjvu download and install
-RUN apt-get -y install build-essential libjpeg62-dev libpng12-dev zlib1g-dev
+RUN apt-get -y install build-essential libjpeg62-dev libpng12-dev zlib1g-dev wget
 RUN /usr/share/freemed/scripts/build_gsdjvu.sh
 
 # Restart Apache HTTPD
