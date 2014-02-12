@@ -38,7 +38,8 @@ RUN echo -e "FreeMED Installation\n127.0.0.1\nfreemed\nfreemed\npassword\nen_US\
 # ... and installation
 ADD ./settings.php /usr/share/freemed/lib/settings.php
 ADD ./install.php /usr/share/freemed/scripts/install.php
-RUN ( cd /usr/share/freemed ; php ./scripts/install.php --ni )
+ADD ./install.sh /tmp/install.sh
+RUN /bin/bash /tmp/install.sh
 
 # Build translations for FreeMED 0.9.x+
 RUN ( cd /usr/share/freemed/locale; make )
