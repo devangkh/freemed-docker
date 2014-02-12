@@ -20,6 +20,9 @@ RUN ( export DEBIAN_FRONTEND=noninteractive ; apt-get -y install git mysql-clien
 # Remove Suhosin
 RUN apt-get --purge remove php5-suhosin
 
+# Replace my.cnf file with custom one to enable LOAD DATA INFILE for data loads
+ADD ./my.cnf /etc/mysql/my.cnf
+
 # MySQL u/p
 ADD ./init-mysqld.sh /tmp/init-mysqld.sh
 RUN /bin/bash /tmp/init-mysqld.sh
