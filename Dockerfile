@@ -74,9 +74,6 @@ ADD ./startup.sh /usr/share/freemed/scripts/startup.sh
 # Expose Apache port
 EXPOSE 80
 
-# Expose Apache volumes for debugging
-VOLUME [ "/var/log/apache2" ]
-
 # Actual startup command to instantiate Apache2 + MySQL services
 CMD [ "/bin/bash", "/usr/share/freemed/scripts/startup.sh" ]
 

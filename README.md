@@ -22,3 +22,9 @@ docker build -rm -t freemed git://github.com/freemed/freemed-docker.git
 docker run -p 8080:80 -d freemed
 ```
 
+To get a shell (for debugging):
+
+```
+docker run -i -t -p 8080:80 freemed /bin/bash
+```
+
