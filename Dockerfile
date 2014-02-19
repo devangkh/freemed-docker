@@ -1,6 +1,9 @@
 # FreeMED
 #
-# VERSION       1.0
+# VERSION       	0.1
+#
+# BUILD-USING:		docker build -rm -t freemed git://github.com/freemed/freemed-docker.git
+# RUN-USING:		docker run -p 8080:80 -d freemed
 
 # use the debian base image provided by dotCloud
 FROM debian
@@ -71,5 +74,9 @@ ADD ./startup.sh /usr/share/freemed/scripts/startup.sh
 # Expose Apache port
 EXPOSE 80
 
+# Expose Apache volumes for debugging
+VOLUME [ "/var/log/apache2" ]
+
+# Actual startup command to instantiate Apache2 + MySQL services
 CMD [ "/bin/bash", "/usr/share/freemed/scripts/startup.sh" ]
 
