@@ -59,6 +59,9 @@ RUN /usr/sbin/a2enmod php5
 RUN apt-get -y install build-essential libjpeg62-dev libpng12-dev zlib1g-dev wget
 RUN /usr/share/freemed/scripts/build_gsdjvu.sh
 
+# Symlink it into position
+RUN ln -s /usr/share/freemed /var/www/freemed
+
 # Restart Apache HTTPD
 RUN /etc/init.d/apache2 restart
 
