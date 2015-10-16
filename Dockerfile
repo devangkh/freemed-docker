@@ -18,7 +18,7 @@ RUN apt-get update
 
 # install dependencies
 RUN ( echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections )
-RUN ( export DEBIAN_FRONTEND=noninteractive ; apt-get -y install git mysql-client mysql-server php5-mysql apache2 libapache2-mod-php5 libxml-parser-perl libtext-iconv-perl djvulibre-bin netpbm graphicsmagick-imagemagick-compat cups-common cups-client gsfonts php5-cgi php5-gd php5-curl xpdf-utils bzip2 pdfjam php5-cli ghostscript dcmtk gettext texinfo openjdk-6-jdk ant make maven2 )
+RUN ( export DEBIAN_FRONTEND=noninteractive ; apt-get -y install git mysql-client mysql-server php5-mysql apache2 libapache2-mod-php5 libxml-parser-perl libtext-iconv-perl djvulibre-bin netpbm graphicsmagick-imagemagick-compat cups-common cups-client gsfonts php5-cgi php5-gd php5-curl xpdf-utils bzip2 pdfjam php5-cli ghostscript dcmtk gettext texinfo openjdk-7-jdk ant make maven2 )
 
 # Remove Suhosin
 RUN apt-get --purge remove php5-suhosin
