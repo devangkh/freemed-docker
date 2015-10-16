@@ -59,7 +59,7 @@ RUN ( cd /usr/share/freemed/ui/gwt; make )
 RUN /usr/sbin/a2enmod php5
 
 # gsdjvu download and install
-RUN apt-get -y install build-essential libjpeg62-dev libpng12-dev zlib1g-dev wget
+RUN apt-get -y install build-essential libjpeg62-turbo-dev libpng12-dev zlib1g-dev wget
 RUN /usr/share/freemed/scripts/build_gsdjvu.sh
 
 # Symlink it into position
