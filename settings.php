@@ -24,8 +24,8 @@
 define ('INSTALLATION', "FreeMED"); // installation name
 define ('DB_HOST', "localhost"); // database (SQL) host location
 define ('DB_NAME', "freemed"); // database name
-define ('DB_USER', "freemed"); // SQL server username
-define ('DB_PASSWORD', "freemed"); // SQL server password
+define ('DB_USER', "root"); // SQL server username
+define ('DB_PASSWORD', ""); // SQL server password
 define ('PATID_PREFIX', ""); // used to generate internal practice ID
 define ('UI', "gwt");	// set default template
 define ('HOST', "localhost"); // host name for this system
